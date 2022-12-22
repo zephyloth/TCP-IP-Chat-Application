@@ -37,10 +37,11 @@ namespace ChatApp___Client
             InitializeComponent();
         }
 
+        const int PORT = 5001;
         TcpClient TCPClient;
         NetworkStream Stream;
         Thread ReceiverThread;
-
+ 
         int ClientID;
         string ClientName => "Client " + ClientID;
 
@@ -51,7 +52,7 @@ namespace ChatApp___Client
  
             try
             {
-                TCPClient.Connect(ip, 5001);
+                TCPClient.Connect(ip, PORT);
             }
             catch (Exception ex)
             {

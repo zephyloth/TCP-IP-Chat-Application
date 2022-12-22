@@ -37,7 +37,7 @@
             this.tbInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbInfo.Location = new System.Drawing.Point(0, 0);
             this.tbInfo.Name = "tbInfo";
-            this.tbInfo.Size = new System.Drawing.Size(284, 261);
+            this.tbInfo.Size = new System.Drawing.Size(484, 311);
             this.tbInfo.TabIndex = 2;
             this.tbInfo.Text = "";
             // 
@@ -45,7 +45,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(484, 311);
             this.Controls.Add(this.tbInfo);
             this.Name = "frmServer";
             this.ShowIcon = false;

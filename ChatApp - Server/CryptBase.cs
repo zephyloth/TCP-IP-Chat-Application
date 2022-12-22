@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
-namespace ChatApp___Client
+
+namespace ChatApp___Server
 {
     public class CryptBase
     {

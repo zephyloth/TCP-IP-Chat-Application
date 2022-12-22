@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CryptBase.cs" />
     <Compile Include="frmServer.cs">
       <SubType>Form</SubType>
     </Compile>

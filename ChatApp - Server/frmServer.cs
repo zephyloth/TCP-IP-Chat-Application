@@ -17,10 +17,11 @@ namespace ChatApp___Server
 {
     public partial class frmServer : Form
     {
+        const int PORT = 5001;
         TcpListener ServerSocket;
         ConcurrentDictionary<int, TcpClient> Clients = new ConcurrentDictionary<int, TcpClient>();
         int ClientCount = 0;
-
+ 
         long IsClosing = 0;
  
         public frmServer()
@@ -35,7 +36,7 @@ namespace ChatApp___Server
  
         void InitializeConnection()
         {
-            ServerSocket = new TcpListener(IPAddress.Any, 5001);
+            ServerSocket = new TcpListener(IPAddress.Any, PORT);
 
             try
             {
@@ -136,10 +137,12 @@ namespace ChatApp___Server
                             break;
                     }
                 }
-   
-                //SendToClients(MessageHeader.Text, Data);
-                //tbInfo.Text += Data + Environment.NewLine;
             }
+
+            BeginInvoke(new Action(() =>
+            {
+                tbInfo.Text += "Client " + ID + " has exited." + Environment.NewLine;
+            }));
  
             Client.Client.Shutdown(SocketShutdown.Both);
             Client.Close();
@@ -211,11 +214,6 @@ namespace ChatApp___Server
                 var Array = MS.ToArray();
                 Stream.Write(Array, 0, Array.Length);
             }
-        }
-
-        private void btnSend_Click(object sender, EventArgs e)
-        {
-            
         }
 
         private void frmServer_FormClosing(object sender, FormClosingEventArgs e)

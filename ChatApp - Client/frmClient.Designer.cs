@@ -35,6 +35,7 @@
             this.imglistIcon = new System.Windows.Forms.ImageList(this.components);
             this.btnSend = new System.Windows.Forms.Button();
             this.lbUsers = new System.Windows.Forms.ListBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // tbInfo
@@ -42,9 +43,9 @@
             this.tbInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbInfo.Location = new System.Drawing.Point(75, 12);
+            this.tbInfo.Location = new System.Drawing.Point(117, 12);
             this.tbInfo.Name = "tbInfo";
-            this.tbInfo.Size = new System.Drawing.Size(192, 174);
+            this.tbInfo.Size = new System.Drawing.Size(355, 224);
             this.tbInfo.TabIndex = 1;
             this.tbInfo.Text = "";
             // 
@@ -53,9 +54,9 @@
             this.tbSend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tbSend.Location = new System.Drawing.Point(12, 192);
+            this.tbSend.Location = new System.Drawing.Point(12, 242);
             this.tbSend.Name = "tbSend";
-            this.tbSend.Size = new System.Drawing.Size(255, 22);
+            this.tbSend.Size = new System.Drawing.Size(460, 22);
             this.tbSend.TabIndex = 2;
             // 
             // imglistIcon
@@ -68,33 +69,48 @@
             // 
             this.btnSend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSend.Location = new System.Drawing.Point(12, 220);
+            this.btnSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnSend.Location = new System.Drawing.Point(12, 270);
             this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(255, 32);
+            this.btnSend.Size = new System.Drawing.Size(460, 32);
             this.btnSend.TabIndex = 3;
-            this.btnSend.Text = "button1";
+            this.btnSend.Text = "Send Message";
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
             // lbUsers
             // 
+            this.lbUsers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.lbUsers.FormattingEnabled = true;
-            this.lbUsers.Location = new System.Drawing.Point(12, 12);
+            this.lbUsers.Location = new System.Drawing.Point(12, 29);
             this.lbUsers.Name = "lbUsers";
-            this.lbUsers.Size = new System.Drawing.Size(57, 173);
+            this.lbUsers.Size = new System.Drawing.Size(99, 199);
             this.lbUsers.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(97, 16);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Online Users";
             // 
             // frmClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(484, 311);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.lbUsers);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.tbSend);
             this.Controls.Add(this.tbInfo);
             this.Name = "frmClient";
+            this.ShowIcon = false;
             this.Text = "Client";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmClient_FormClosing);
             this.Load += new System.EventHandler(this.frmClient_Load);
@@ -109,6 +125,7 @@
         private System.Windows.Forms.ImageList imglistIcon;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.ListBox lbUsers;
+        private System.Windows.Forms.Label label1;
     }
 }
 
