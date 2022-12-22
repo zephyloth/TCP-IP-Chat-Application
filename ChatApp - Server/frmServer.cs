@@ -93,6 +93,7 @@ namespace ChatApp___Server
                 } 
             }
   
+            if(OtherClients.Count > 0)
             SendToClient(0, ID, MessageHeader.AddClient, OtherClients);
 
             while (Interlocked.Read(ref IsClosing) == 0)
@@ -100,7 +101,7 @@ namespace ChatApp___Server
                 NetworkStream Stream = Client.GetStream();
   
                 int DataSize = GetDataSize(Stream);
-                if (DataSize == 0) break;
+                if (DataSize == -1) break;
         
                 byte[] Buffer = new byte[3 * sizeof(int) + DataSize];
                 Stream.Read(Buffer, 0, Buffer.Length);
@@ -120,7 +121,10 @@ namespace ChatApp___Server
                         MessageHeader = (MessageHeader)BR.ReadInt32();
                     }
                 }
-      
+
+                if (Data.Length == 0)
+                    continue;
+
                 if (ReceiverID > 0)
                 {
                     switch (MessageHeader)
@@ -148,11 +152,8 @@ namespace ChatApp___Server
         {
             byte[] SizeBuffer = new byte[4];
             int Read = Stream.Read(SizeBuffer, 0, SizeBuffer.Length);
-
-            int DataSize=0;
-            if (Read > 0)
-            DataSize = BitConverter.ToInt32(SizeBuffer, 0);
-   
+            if (Read == 0) return -1;
+            int DataSize = BitConverter.ToInt32(SizeBuffer, 0);
             return DataSize;
         }
 

@@ -90,7 +90,7 @@ namespace ChatApp___Client
             while (true)
             {
                 int DataSize = GetDataSize(Stream);
-                if (DataSize == 0) break;
+                if (DataSize == -1) break;
 
                 byte[] Buffer = new byte[3 * sizeof(int) + DataSize];
                 Stream.Read(Buffer, 0, Buffer.Length);
@@ -110,6 +110,9 @@ namespace ChatApp___Client
                         MessageHeader = (MessageHeader)BR.ReadInt32();
                     }
                 }
+
+                if (Data.Length == 0)
+                    continue;
 
                 BeginInvoke(new Action(() => 
                 {
@@ -169,11 +172,8 @@ namespace ChatApp___Client
         {
             byte[] SizeBuffer = new byte[4];
             int Read = Stream.Read(SizeBuffer, 0, SizeBuffer.Length);
-
-            int DataSize = 0;
-            if (Read > 0)
-                DataSize = BitConverter.ToInt32(SizeBuffer, 0);
-
+            if (Read == 0) return -1;
+            int DataSize = BitConverter.ToInt32(SizeBuffer, 0);
             return DataSize;
         }
 
@@ -189,6 +189,7 @@ namespace ChatApp___Client
 
         private void btnSend_Click(object sender, EventArgs e)
         {
+            if (lbUsers.SelectedIndex < 0) return;
             Send();
         }
     }
