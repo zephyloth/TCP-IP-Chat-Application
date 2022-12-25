@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MaterialSkin;
+using MaterialSkin.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,10 +13,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace ChatApp___Client
 {
-    public partial class frmClient : Form
+    public partial class frmClient : MaterialForm
     {
         public class ListBoxObject : object
         {
@@ -35,6 +38,11 @@ namespace ChatApp___Client
         {
             CheckForIllegalCrossThreadCalls = true;
             InitializeComponent();
+
+            var MaterialSkinMgr = MaterialSkinManager.Instance;
+            MaterialSkinMgr.AddFormToManage(this);
+            MaterialSkinMgr.Theme = MaterialSkinManager.Themes.LIGHT;
+            MaterialSkinMgr.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
         }
 
         const int PORT = 5001;
@@ -127,7 +135,11 @@ namespace ChatApp___Client
                         case MessageHeader.AddClient:
                             for (int i = 0; i < Data.Length / sizeof(int); i++)
                             {
-                                lbUsers.Items.Add(new ListBoxObject(BitConverter.ToInt32(Data, i * sizeof(int))));
+                                int UserID = BitConverter.ToInt32(Data, i * sizeof(int));
+                                ListViewItem Item = new ListViewItem("Client " + UserID);
+                                Item.Tag = UserID;
+
+                                lvUsers.Items.Add(Item);
                             }
                             break;
                         case MessageHeader.Text:
@@ -148,8 +160,7 @@ namespace ChatApp___Client
                 return;
 
             int SenderID = ClientID;
-            ListBoxObject SelectedUserData = (ListBoxObject)lbUsers.SelectedItem;
-            int ReceiverID = SelectedUserData.ID;
+            int ReceiverID = (int)lvUsers.SelectedItems[0].Tag;
 
             byte[] Data = Encoding.ASCII.GetBytes(tbSend.Text);
 
@@ -190,7 +201,7 @@ namespace ChatApp___Client
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            if (lbUsers.SelectedIndex < 0) return;
+            if (lvUsers.SelectedIndices.Count == 0) return;
             Send();
         }
     }
