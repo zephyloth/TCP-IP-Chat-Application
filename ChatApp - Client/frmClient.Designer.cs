@@ -67,10 +67,10 @@
             this.tpChat.Controls.Add(this.btnSend);
             this.tpChat.Controls.Add(this.tbSend);
             this.tpChat.ImageKey = "Chat32.png";
-            this.tpChat.Location = new System.Drawing.Point(4, 22);
+            this.tpChat.Location = new System.Drawing.Point(4, 39);
             this.tpChat.Name = "tpChat";
             this.tpChat.Padding = new System.Windows.Forms.Padding(3);
-            this.tpChat.Size = new System.Drawing.Size(685, 410);
+            this.tpChat.Size = new System.Drawing.Size(685, 393);
             this.tpChat.TabIndex = 0;
             this.tpChat.Text = "Chat";
             this.tpChat.UseVisualStyleBackColor = true;
@@ -88,7 +88,8 @@
             this.tbInfo.Location = new System.Drawing.Point(212, 35);
             this.tbInfo.MouseState = MaterialSkin.MouseState.HOVER;
             this.tbInfo.Name = "tbInfo";
-            this.tbInfo.Size = new System.Drawing.Size(466, 313);
+            this.tbInfo.ReadOnly = true;
+            this.tbInfo.Size = new System.Drawing.Size(466, 296);
             this.tbInfo.TabIndex = 10;
             this.tbInfo.Text = "";
             // 
@@ -124,10 +125,11 @@
             this.lvUsers.MultiSelect = false;
             this.lvUsers.Name = "lvUsers";
             this.lvUsers.OwnerDraw = true;
-            this.lvUsers.Size = new System.Drawing.Size(200, 313);
+            this.lvUsers.Size = new System.Drawing.Size(200, 295);
             this.lvUsers.TabIndex = 8;
             this.lvUsers.UseCompatibleStateImageBehavior = false;
             this.lvUsers.View = System.Windows.Forms.View.Details;
+            this.lvUsers.SelectedIndexChanged += new System.EventHandler(this.lvUsers_SelectedIndexChanged);
             // 
             // columnHeader1
             // 
@@ -142,7 +144,7 @@
             this.btnSend.Depth = 0;
             this.btnSend.HighEmphasis = true;
             this.btnSend.Icon = null;
-            this.btnSend.Location = new System.Drawing.Point(603, 354);
+            this.btnSend.Location = new System.Drawing.Point(603, 341);
             this.btnSend.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnSend.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSend.Name = "btnSend";
@@ -164,7 +166,7 @@
             this.tbSend.Depth = 0;
             this.tbSend.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.tbSend.LeadingIcon = null;
-            this.tbSend.Location = new System.Drawing.Point(6, 354);
+            this.tbSend.Location = new System.Drawing.Point(6, 340);
             this.tbSend.MaxLength = 50;
             this.tbSend.MouseState = MaterialSkin.MouseState.OUT;
             this.tbSend.Multiline = false;
@@ -177,10 +179,10 @@
             // tpProfile
             // 
             this.tpProfile.ImageKey = "User32.png";
-            this.tpProfile.Location = new System.Drawing.Point(4, 22);
+            this.tpProfile.Location = new System.Drawing.Point(4, 39);
             this.tpProfile.Name = "tpProfile";
             this.tpProfile.Padding = new System.Windows.Forms.Padding(3);
-            this.tpProfile.Size = new System.Drawing.Size(685, 410);
+            this.tpProfile.Size = new System.Drawing.Size(685, 393);
             this.tpProfile.TabIndex = 1;
             this.tpProfile.Text = "Profile Properties";
             this.tpProfile.UseVisualStyleBackColor = true;

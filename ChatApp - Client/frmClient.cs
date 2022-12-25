@@ -15,25 +15,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Linq;
 using Core.Crypto;
+using System.Collections.Concurrent;
 
 namespace ChatApp___Client
 {
     public partial class frmClient : MaterialForm
     {
-        public class ListBoxObject : object
-        {
-            public int ID { get; set; }
-
-            public ListBoxObject(int ID)
-            {
-                this.ID = ID;
-            }
-
-            public override string ToString()
-            {
-                return "Client " + ID;
-            }
-        }
+       
 
         public frmClient()
         {
@@ -54,6 +42,9 @@ namespace ChatApp___Client
  
         int ClientID;
         string ClientName => "Client " + ClientID;
+
+        ConcurrentDictionary<int, StringBuilder> Chats = new ConcurrentDictionary<int, StringBuilder>();
+
 
         void InitializeConnection()
         {
@@ -139,6 +130,7 @@ namespace ChatApp___Client
                             {
                                 int UserID = BitConverter.ToInt32(Data, i * sizeof(int));
                                 ListViewItem Item = new ListViewItem("Client " + UserID);
+                                Chats.TryAdd(UserID, new StringBuilder());
                                 Item.Tag = UserID;
                                 lvUsers.Items.Add(Item);
                             }
@@ -147,8 +139,12 @@ namespace ChatApp___Client
                             string EncryptedText = Encoding.UTF8.GetString(Data);
                             BlowFish BlowFish = new BlowFish(EncryptionKey, new HexCoding());
                             string DecryptedText = BlowFish.DecryptECB(EncryptedText, EncryptedText.Length);
-
-                            tbInfo.Text += "Client " + SenderID + ": " + DecryptedText + Environment.NewLine;
+                            string NewMessageLine = "Client " + SenderID + " : " + DecryptedText;
+                            UpdateChat(SenderID, NewMessageLine);
+                            // update tbInfo
+                            lvUsers.FindItemWithText("Client " + SenderID.ToString()).Selected = true;
+                            tbInfo.Text = Chats[SenderID].ToString();
+                            //tbInfo.Text += "Client " + SenderID + ": " + DecryptedText + Environment.NewLine;
                             break;
                         default:
                             break;
@@ -164,9 +160,15 @@ namespace ChatApp___Client
             if (string.IsNullOrEmpty(tbSend.Text))
                 return;
 
+            
+
             int SenderID = ClientID;
             int ReceiverID = (int)lvUsers.SelectedItems[0].Tag;
- 
+
+            string NewMessageLine = "You : " + tbSend.Text;
+            UpdateChat(ReceiverID, NewMessageLine);
+            tbInfo.Text = Chats[ReceiverID].ToString();
+
             BlowFish BlowFish = new BlowFish(EncryptionKey, new HexCoding());
             string EncryptedText = BlowFish.EncryptECB(tbSend.Text);
             byte[] Data = Encoding.UTF8.GetBytes(EncryptedText);
@@ -199,6 +201,8 @@ namespace ChatApp___Client
         private void frmClient_Load(object sender, EventArgs e)
         {
             InitializeConnection();
+            
+
         }
  
         private void frmClient_FormClosing(object sender, FormClosingEventArgs e)
@@ -211,5 +215,26 @@ namespace ChatApp___Client
             if (lvUsers.SelectedIndices.Count == 0) return;
             Send();
         }
+
+        private void lvUsers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lvUsers.SelectedIndices.Count == 0)
+            {
+                tbInfo.Clear();
+                return;
+            }
+            
+            int SelectedUserId = (int)lvUsers.SelectedItems[0].Tag;
+            tbInfo.Text = Chats[SelectedUserId].ToString();
+
+
+        }
+
+        private void UpdateChat(int friendId, string message)
+        {
+            Chats[friendId].AppendLine(message);
+
+        }
+
     }
 }
