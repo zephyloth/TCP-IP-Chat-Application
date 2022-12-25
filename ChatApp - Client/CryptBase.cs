@@ -11,6 +11,14 @@ namespace ChatApp___Client
 {
     public class CryptBase
     {
+        public static string CreateMD5(string Input)
+        {
+            byte[] Bytes = new UTF8Encoding().GetBytes(Input);
+            byte[] Hash = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(Bytes);
+            string Encoded = BitConverter.ToString(Hash).Replace("-", string.Empty).ToLower();
+            return Encoded;
+        }
+
         /// <summary>
         /// Twofish algorithm implementation.
         /// This class cannot be inherited.

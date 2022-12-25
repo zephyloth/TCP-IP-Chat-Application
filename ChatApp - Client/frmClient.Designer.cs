@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmClient));
-            this.imglistIcon = new System.Windows.Forms.ImageList(this.components);
             this.TabControl = new MaterialSkin.Controls.MaterialTabControl();
             this.tpChat = new System.Windows.Forms.TabPage();
             this.tbInfo = new MaterialSkin.Controls.MaterialMultiLineTextBox();
@@ -40,15 +39,10 @@
             this.btnSend = new MaterialSkin.Controls.MaterialButton();
             this.tbSend = new MaterialSkin.Controls.MaterialTextBox();
             this.tpProfile = new System.Windows.Forms.TabPage();
+            this.imgListIcons = new System.Windows.Forms.ImageList(this.components);
             this.TabControl.SuspendLayout();
             this.tpChat.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // imglistIcon
-            // 
-            this.imglistIcon.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imglistIcon.ImageStream")));
-            this.imglistIcon.TransparentColor = System.Drawing.Color.Transparent;
-            this.imglistIcon.Images.SetKeyName(0, "TestIcon.png");
             // 
             // TabControl
             // 
@@ -56,6 +50,7 @@
             this.TabControl.Controls.Add(this.tpProfile);
             this.TabControl.Depth = 0;
             this.TabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TabControl.ImageList = this.imgListIcons;
             this.TabControl.Location = new System.Drawing.Point(3, 64);
             this.TabControl.MouseState = MaterialSkin.MouseState.HOVER;
             this.TabControl.Multiline = true;
@@ -71,6 +66,7 @@
             this.tpChat.Controls.Add(this.lvUsers);
             this.tpChat.Controls.Add(this.btnSend);
             this.tpChat.Controls.Add(this.tbSend);
+            this.tpChat.ImageKey = "Chat32.png";
             this.tpChat.Location = new System.Drawing.Point(4, 22);
             this.tpChat.Name = "tpChat";
             this.tpChat.Padding = new System.Windows.Forms.Padding(3);
@@ -135,7 +131,7 @@
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Width = 198;
+            this.columnHeader1.Width = 200;
             // 
             // btnSend
             // 
@@ -180,6 +176,7 @@
             // 
             // tpProfile
             // 
+            this.tpProfile.ImageKey = "User32.png";
             this.tpProfile.Location = new System.Drawing.Point(4, 22);
             this.tpProfile.Name = "tpProfile";
             this.tpProfile.Padding = new System.Windows.Forms.Padding(3);
@@ -187,6 +184,13 @@
             this.tpProfile.TabIndex = 1;
             this.tpProfile.Text = "Profile Properties";
             this.tpProfile.UseVisualStyleBackColor = true;
+            // 
+            // imgListIcons
+            // 
+            this.imgListIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgListIcons.ImageStream")));
+            this.imgListIcons.TransparentColor = System.Drawing.Color.Transparent;
+            this.imgListIcons.Images.SetKeyName(0, "Chat32.png");
+            this.imgListIcons.Images.SetKeyName(1, "User32.png");
             // 
             // frmClient
             // 
@@ -198,7 +202,6 @@
             this.DrawerShowIconsWhenHidden = true;
             this.DrawerTabControl = this.TabControl;
             this.Name = "frmClient";
-            this.ShowIcon = false;
             this.Text = "Client";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmClient_FormClosing);
             this.Load += new System.EventHandler(this.frmClient_Load);
@@ -210,7 +213,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.ImageList imglistIcon;
         private MaterialSkin.Controls.MaterialTabControl TabControl;
         private System.Windows.Forms.TabPage tpChat;
         private System.Windows.Forms.TabPage tpProfile;
@@ -220,6 +222,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private MaterialSkin.Controls.MaterialLabel lblUsers;
         private MaterialSkin.Controls.MaterialMultiLineTextBox tbInfo;
+        private System.Windows.Forms.ImageList imgListIcons;
     }
 }
 

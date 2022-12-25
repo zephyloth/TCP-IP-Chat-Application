@@ -14,6 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Linq;
+using Core.Crypto;
 
 namespace ChatApp___Client
 {
@@ -36,7 +37,6 @@ namespace ChatApp___Client
 
         public frmClient()
         {
-            CheckForIllegalCrossThreadCalls = true;
             InitializeComponent();
 
             var MaterialSkinMgr = MaterialSkinManager.Instance;
@@ -46,6 +46,8 @@ namespace ChatApp___Client
         }
 
         const int PORT = 5001;
+        string EncryptionKey = CryptBase.CreateMD5("jumbojetxx123");
+
         TcpClient TCPClient;
         NetworkStream Stream;
         Thread ReceiverThread;
@@ -138,12 +140,15 @@ namespace ChatApp___Client
                                 int UserID = BitConverter.ToInt32(Data, i * sizeof(int));
                                 ListViewItem Item = new ListViewItem("Client " + UserID);
                                 Item.Tag = UserID;
-
                                 lvUsers.Items.Add(Item);
                             }
                             break;
                         case MessageHeader.Text:
-                            tbInfo.Text += "Client " + SenderID + ": " + Encoding.UTF8.GetString(Data) + Environment.NewLine;
+                            string EncryptedText = Encoding.UTF8.GetString(Data);
+                            BlowFish BlowFish = new BlowFish(EncryptionKey, new HexCoding());
+                            string DecryptedText = BlowFish.DecryptECB(EncryptedText, EncryptedText.Length);
+
+                            tbInfo.Text += "Client " + SenderID + ": " + DecryptedText + Environment.NewLine;
                             break;
                         default:
                             break;
@@ -161,9 +166,11 @@ namespace ChatApp___Client
 
             int SenderID = ClientID;
             int ReceiverID = (int)lvUsers.SelectedItems[0].Tag;
-
-            byte[] Data = Encoding.ASCII.GetBytes(tbSend.Text);
-
+ 
+            BlowFish BlowFish = new BlowFish(EncryptionKey, new HexCoding());
+            string EncryptedText = BlowFish.EncryptECB(tbSend.Text);
+            byte[] Data = Encoding.UTF8.GetBytes(EncryptedText);
+ 
             using (MemoryStream MS = new MemoryStream(4 * sizeof(int) + Data.Length))
             {
                 using (BinaryWriter BW = new BinaryWriter(MS))

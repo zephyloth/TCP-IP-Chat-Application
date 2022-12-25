@@ -12,12 +12,15 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections.Concurrent;
 using System.IO;
+using Core.Crypto;
 
 namespace ChatApp___Server
 {
     public partial class frmServer : Form
     {
         const int PORT = 5001;
+        string EncryptionKey = CryptBase.CreateMD5("jumbojetxx123");
+
         TcpListener ServerSocket;
         ConcurrentDictionary<int, TcpClient> Clients = new ConcurrentDictionary<int, TcpClient>();
         int ClientCount = 0;
@@ -200,7 +203,7 @@ namespace ChatApp___Server
                                 BW.Write(Client);
                             break;
                         case MessageHeader.Text:
-                            BW.Write((byte[])Data);
+                            BW.Write( (byte[])Data);
                             break;
                         default:
                             break;
