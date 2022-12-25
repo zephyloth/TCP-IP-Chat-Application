@@ -11,6 +11,7 @@ namespace ChatApp___Server
     public enum MessageHeader : int
     {
         Register,
+        Login,
         AddClient,
         Text
     }
