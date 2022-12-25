@@ -62,7 +62,7 @@ namespace ChatApp___Server
 
                         ClientCount++;
                         Clients.TryAdd(ClientCount, Client);
-                        tbInfo.Text += "Client " + ClientCount + " has connected." + Environment.NewLine;
+                        BeginInvoke(new Action(() => { tbInfo.Text += "Client " + ClientCount + " has connected." + Environment.NewLine; }));
 
                         Thread t = new Thread(() => { ClientDataReader(ClientCount, Client); });
                         t.Start();
