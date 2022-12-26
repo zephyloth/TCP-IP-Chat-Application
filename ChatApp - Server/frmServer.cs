@@ -107,14 +107,14 @@ namespace ChatApp___Server
                 int DataSize = GetDataSize(Stream);
                 if (DataSize == -1) break;
         
-                byte[] Buffer = new byte[3 * sizeof(int) + DataSize];
+                byte[] Buffer = new byte[Message.GetFixedSizeWithoutLength() + DataSize];
                 Stream.Read(Buffer, 0, Buffer.Length);
 
                 byte[] Data;
                 int SenderID;
                 int ReceiverID;
                 MessageHeader MessageHeader;
-   
+  
                 using (MemoryStream MS = new MemoryStream(Buffer))
                 {
                     using (BinaryReader BR = new BinaryReader(MS))
@@ -123,6 +123,7 @@ namespace ChatApp___Server
                         SenderID = BR.ReadInt32();
                         ReceiverID = BR.ReadInt32();
                         MessageHeader = (MessageHeader)BR.ReadInt32();
+
                     }
                 }
 
@@ -187,7 +188,7 @@ namespace ChatApp___Server
                     break;
             }
 
-            using (MemoryStream MS = new MemoryStream(4 * sizeof(int) + DataSize))
+            using (MemoryStream MS = new MemoryStream(Message.GetFixedSize() + DataSize))
             {
                 using (BinaryWriter BW = new BinaryWriter(MS))
                 {
@@ -211,7 +212,7 @@ namespace ChatApp___Server
 
                     BW.Write(SenderID);
                     BW.Write(ReceiverID);
-                    BW.Write((int)Header);             
+                    BW.Write((int)Header);
                 }
 
                 var Array = MS.ToArray();

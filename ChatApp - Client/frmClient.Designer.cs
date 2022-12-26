@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmClient));
             this.TabControl = new MaterialSkin.Controls.MaterialTabControl();
             this.tpChat = new System.Windows.Forms.TabPage();
+            this.btnSend1000x = new MaterialSkin.Controls.MaterialButton();
             this.tbInfo = new MaterialSkin.Controls.MaterialMultiLineTextBox();
             this.lblUsers = new MaterialSkin.Controls.MaterialLabel();
             this.lvUsers = new MaterialSkin.Controls.MaterialListView();
@@ -61,6 +62,7 @@
             // 
             // tpChat
             // 
+            this.tpChat.Controls.Add(this.btnSend1000x);
             this.tpChat.Controls.Add(this.tbInfo);
             this.tpChat.Controls.Add(this.lblUsers);
             this.tpChat.Controls.Add(this.lvUsers);
@@ -74,6 +76,27 @@
             this.tpChat.TabIndex = 0;
             this.tpChat.Text = "Chat";
             this.tpChat.UseVisualStyleBackColor = true;
+            // 
+            // btnSend1000x
+            // 
+            this.btnSend1000x.AutoSize = false;
+            this.btnSend1000x.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnSend1000x.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnSend1000x.Depth = 0;
+            this.btnSend1000x.HighEmphasis = true;
+            this.btnSend1000x.Icon = null;
+            this.btnSend1000x.Location = new System.Drawing.Point(117, 6);
+            this.btnSend1000x.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnSend1000x.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnSend1000x.Name = "btnSend1000x";
+            this.btnSend1000x.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnSend1000x.Size = new System.Drawing.Size(116, 22);
+            this.btnSend1000x.TabIndex = 11;
+            this.btnSend1000x.Text = "Send 1000x";
+            this.btnSend1000x.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnSend1000x.UseAccentColor = false;
+            this.btnSend1000x.UseVisualStyleBackColor = true;
+            this.btnSend1000x.Click += new System.EventHandler(this.btnSend1000x_Click);
             // 
             // tbInfo
             // 
@@ -98,7 +121,7 @@
             this.lblUsers.AutoSize = true;
             this.lblUsers.Depth = 0;
             this.lblUsers.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblUsers.Location = new System.Drawing.Point(6, 13);
+            this.lblUsers.Location = new System.Drawing.Point(11, 9);
             this.lblUsers.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblUsers.Name = "lblUsers";
             this.lblUsers.Size = new System.Drawing.Size(89, 19);
@@ -125,7 +148,7 @@
             this.lvUsers.MultiSelect = false;
             this.lvUsers.Name = "lvUsers";
             this.lvUsers.OwnerDraw = true;
-            this.lvUsers.Size = new System.Drawing.Size(200, 295);
+            this.lvUsers.Size = new System.Drawing.Size(200, 296);
             this.lvUsers.TabIndex = 8;
             this.lvUsers.UseCompatibleStateImageBehavior = false;
             this.lvUsers.View = System.Windows.Forms.View.Details;
@@ -144,7 +167,7 @@
             this.btnSend.Depth = 0;
             this.btnSend.HighEmphasis = true;
             this.btnSend.Icon = null;
-            this.btnSend.Location = new System.Drawing.Point(603, 341);
+            this.btnSend.Location = new System.Drawing.Point(603, 337);
             this.btnSend.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnSend.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSend.Name = "btnSend";
@@ -166,7 +189,7 @@
             this.tbSend.Depth = 0;
             this.tbSend.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.tbSend.LeadingIcon = null;
-            this.tbSend.Location = new System.Drawing.Point(6, 340);
+            this.tbSend.Location = new System.Drawing.Point(6, 337);
             this.tbSend.MaxLength = 50;
             this.tbSend.MouseState = MaterialSkin.MouseState.OUT;
             this.tbSend.Multiline = false;
@@ -225,6 +248,7 @@
         private MaterialSkin.Controls.MaterialLabel lblUsers;
         private MaterialSkin.Controls.MaterialMultiLineTextBox tbInfo;
         private System.Windows.Forms.ImageList imgListIcons;
+        private MaterialSkin.Controls.MaterialButton btnSend1000x;
     }
 }
 
