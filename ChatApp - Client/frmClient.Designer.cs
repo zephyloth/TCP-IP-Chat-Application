@@ -32,6 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmClient));
             this.TabControl = new MaterialSkin.Controls.MaterialTabControl();
             this.tpChat = new System.Windows.Forms.TabPage();
+            this.lblClientName = new MaterialSkin.Controls.MaterialLabel();
+            this.cbTestMode = new MaterialSkin.Controls.MaterialCheckbox();
             this.btnSend1000x = new MaterialSkin.Controls.MaterialButton();
             this.tbInfo = new MaterialSkin.Controls.MaterialMultiLineTextBox();
             this.lblUsers = new MaterialSkin.Controls.MaterialLabel();
@@ -44,7 +46,6 @@
             this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.cbEncryption = new System.Windows.Forms.ComboBox();
             this.imgListIcons = new System.Windows.Forms.ImageList(this.components);
-            this.cbTestMode = new MaterialSkin.Controls.MaterialCheckbox();
             this.TabControl.SuspendLayout();
             this.tpChat.SuspendLayout();
             this.tpProperties.SuspendLayout();
@@ -62,11 +63,12 @@
             this.TabControl.Multiline = true;
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
-            this.TabControl.Size = new System.Drawing.Size(693, 436);
+            this.TabControl.Size = new System.Drawing.Size(794, 433);
             this.TabControl.TabIndex = 6;
             // 
             // tpChat
             // 
+            this.tpChat.Controls.Add(this.lblClientName);
             this.tpChat.Controls.Add(this.cbTestMode);
             this.tpChat.Controls.Add(this.btnSend1000x);
             this.tpChat.Controls.Add(this.tbInfo);
@@ -78,10 +80,39 @@
             this.tpChat.Location = new System.Drawing.Point(4, 39);
             this.tpChat.Name = "tpChat";
             this.tpChat.Padding = new System.Windows.Forms.Padding(3);
-            this.tpChat.Size = new System.Drawing.Size(685, 393);
+            this.tpChat.Size = new System.Drawing.Size(786, 390);
             this.tpChat.TabIndex = 0;
             this.tpChat.Text = "Chat";
             this.tpChat.UseVisualStyleBackColor = true;
+            // 
+            // lblClientName
+            // 
+            this.lblClientName.AutoSize = true;
+            this.lblClientName.Depth = 0;
+            this.lblClientName.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblClientName.Location = new System.Drawing.Point(209, 12);
+            this.lblClientName.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblClientName.Name = "lblClientName";
+            this.lblClientName.Size = new System.Drawing.Size(1, 0);
+            this.lblClientName.TabIndex = 14;
+            // 
+            // cbTestMode
+            // 
+            this.cbTestMode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbTestMode.AutoSize = true;
+            this.cbTestMode.Depth = 0;
+            this.cbTestMode.Location = new System.Drawing.Point(534, 3);
+            this.cbTestMode.Margin = new System.Windows.Forms.Padding(0);
+            this.cbTestMode.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.cbTestMode.MouseState = MaterialSkin.MouseState.HOVER;
+            this.cbTestMode.Name = "cbTestMode";
+            this.cbTestMode.ReadOnly = false;
+            this.cbTestMode.Ripple = true;
+            this.cbTestMode.Size = new System.Drawing.Size(110, 37);
+            this.cbTestMode.TabIndex = 13;
+            this.cbTestMode.Text = "Test Mode";
+            this.cbTestMode.UseVisualStyleBackColor = true;
+            this.cbTestMode.CheckedChanged += new System.EventHandler(this.cbTestMode_CheckedChanged);
             // 
             // btnSend1000x
             // 
@@ -92,7 +123,7 @@
             this.btnSend1000x.Depth = 0;
             this.btnSend1000x.HighEmphasis = true;
             this.btnSend1000x.Icon = null;
-            this.btnSend1000x.Location = new System.Drawing.Point(562, 9);
+            this.btnSend1000x.Location = new System.Drawing.Point(663, 9);
             this.btnSend1000x.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnSend1000x.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSend1000x.Name = "btnSend1000x";
@@ -119,7 +150,7 @@
             this.tbInfo.MouseState = MaterialSkin.MouseState.HOVER;
             this.tbInfo.Name = "tbInfo";
             this.tbInfo.ReadOnly = true;
-            this.tbInfo.Size = new System.Drawing.Size(466, 288);
+            this.tbInfo.Size = new System.Drawing.Size(567, 285);
             this.tbInfo.TabIndex = 10;
             this.tbInfo.Text = "";
             // 
@@ -155,7 +186,7 @@
             this.lvUsers.MultiSelect = false;
             this.lvUsers.Name = "lvUsers";
             this.lvUsers.OwnerDraw = true;
-            this.lvUsers.Size = new System.Drawing.Size(200, 291);
+            this.lvUsers.Size = new System.Drawing.Size(200, 288);
             this.lvUsers.TabIndex = 8;
             this.lvUsers.UseCompatibleStateImageBehavior = false;
             this.lvUsers.View = System.Windows.Forms.View.Details;
@@ -174,7 +205,7 @@
             this.btnSend.Depth = 0;
             this.btnSend.HighEmphasis = true;
             this.btnSend.Icon = null;
-            this.btnSend.Location = new System.Drawing.Point(603, 337);
+            this.btnSend.Location = new System.Drawing.Point(704, 334);
             this.btnSend.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnSend.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSend.Name = "btnSend";
@@ -196,12 +227,12 @@
             this.tbSend.Depth = 0;
             this.tbSend.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.tbSend.LeadingIcon = null;
-            this.tbSend.Location = new System.Drawing.Point(6, 337);
-            this.tbSend.MaxLength = 50;
+            this.tbSend.Location = new System.Drawing.Point(6, 334);
+            this.tbSend.MaxLength = 128;
             this.tbSend.MouseState = MaterialSkin.MouseState.OUT;
             this.tbSend.Multiline = false;
             this.tbSend.Name = "tbSend";
-            this.tbSend.Size = new System.Drawing.Size(590, 50);
+            this.tbSend.Size = new System.Drawing.Size(691, 50);
             this.tbSend.TabIndex = 6;
             this.tbSend.Text = "";
             this.tbSend.TrailingIcon = null;
@@ -215,7 +246,7 @@
             this.tpProperties.Location = new System.Drawing.Point(4, 39);
             this.tpProperties.Name = "tpProperties";
             this.tpProperties.Padding = new System.Windows.Forms.Padding(3);
-            this.tpProperties.Size = new System.Drawing.Size(685, 393);
+            this.tpProperties.Size = new System.Drawing.Size(536, 290);
             this.tpProperties.TabIndex = 1;
             this.tpProperties.Text = "Properties";
             this.tpProperties.UseVisualStyleBackColor = true;
@@ -272,30 +303,12 @@
             this.imgListIcons.Images.SetKeyName(0, "Chat32.png");
             this.imgListIcons.Images.SetKeyName(1, "Settings32.png");
             // 
-            // cbTestMode
-            // 
-            this.cbTestMode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbTestMode.AutoSize = true;
-            this.cbTestMode.Depth = 0;
-            this.cbTestMode.Location = new System.Drawing.Point(433, 3);
-            this.cbTestMode.Margin = new System.Windows.Forms.Padding(0);
-            this.cbTestMode.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.cbTestMode.MouseState = MaterialSkin.MouseState.HOVER;
-            this.cbTestMode.Name = "cbTestMode";
-            this.cbTestMode.ReadOnly = false;
-            this.cbTestMode.Ripple = true;
-            this.cbTestMode.Size = new System.Drawing.Size(110, 37);
-            this.cbTestMode.TabIndex = 13;
-            this.cbTestMode.Text = "Test Mode";
-            this.cbTestMode.UseVisualStyleBackColor = true;
-            this.cbTestMode.CheckedChanged += new System.EventHandler(this.cbTestMode_CheckedChanged);
-            // 
             // frmClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(699, 503);
+            this.ClientSize = new System.Drawing.Size(800, 500);
             this.Controls.Add(this.TabControl);
             this.DrawerShowIconsWhenHidden = true;
             this.DrawerTabControl = this.TabControl;
@@ -328,6 +341,7 @@
         private System.Windows.Forms.ComboBox cbEncryption;
         private MaterialSkin.Controls.MaterialButton btnApplyProperties;
         private MaterialSkin.Controls.MaterialCheckbox cbTestMode;
+        private MaterialSkin.Controls.MaterialLabel lblClientName;
     }
 }
 

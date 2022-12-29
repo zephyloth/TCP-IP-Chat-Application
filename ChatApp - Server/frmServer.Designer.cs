@@ -35,6 +35,7 @@
             // 
             this.tbInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.tbInfo.Location = new System.Drawing.Point(0, 0);
             this.tbInfo.Name = "tbInfo";
             this.tbInfo.Size = new System.Drawing.Size(484, 311);

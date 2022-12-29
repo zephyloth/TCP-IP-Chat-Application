@@ -29,6 +29,7 @@ namespace ChatApp___Server
  
         public frmServer()
         {
+            CheckForIllegalCrossThreadCalls = false;
             InitializeComponent();
         }
 

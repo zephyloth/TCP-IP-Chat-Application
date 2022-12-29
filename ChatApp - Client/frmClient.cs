@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Linq;
 using Core.Crypto;
-using System.Collections.Concurrent;
+using System.Collections;
 
 namespace ChatApp___Client
 {
@@ -23,12 +23,13 @@ namespace ChatApp___Client
     {
         public frmClient()
         {
+            CheckForIllegalCrossThreadCalls = false;
             InitializeComponent();
 
             var MaterialSkinMgr = MaterialSkinManager.Instance;
             MaterialSkinMgr.AddFormToManage(this);
             MaterialSkinMgr.Theme = MaterialSkinManager.Themes.LIGHT;
-            MaterialSkinMgr.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+            MaterialSkinMgr.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.Blue200, TextShade.WHITE);
         }
 
         const int PORT = 5001;
@@ -37,7 +38,7 @@ namespace ChatApp___Client
         NetworkStream Stream;
         Thread ReceiverThread;
 
-        ConcurrentDictionary<int, StringBuilder> Chats = new ConcurrentDictionary<int, StringBuilder>();
+        Dictionary<int, StringBuilder> Chats = new Dictionary<int, StringBuilder>();
 
         string EncryptionPass = CryptBase.CreateMD5("jumbojetxx123");
         CryptBase.EncryptionMethod EncryptionMethod;
@@ -131,7 +132,7 @@ namespace ChatApp___Client
                             {
                                 int UserID = BitConverter.ToInt32(Data, i * sizeof(int));
                                 ListViewItem Item = new ListViewItem("Client " + UserID);
-                                Chats.TryAdd(UserID, new StringBuilder());
+                                Chats.Add(UserID, new StringBuilder());
                                 Item.Tag = UserID;
                                 lvUsers.Items.Add(Item);
                             }
@@ -162,7 +163,8 @@ namespace ChatApp___Client
                                             break;
                                     }
                                     if (DecryptedText == "") return;
-                                   
+                                    DecryptedText = DecryptedText.TrimEnd();
+
                                     TimeSpan Span = DateTime.Now - SentDate.ConvertToDateTime();
                                     double ElapsedMS = Math.Round(Span.TotalMilliseconds % 256, 3);
                                     string TimeString = "[" + SentDate.Hour + ":" + SentDate.Minute + ":" + SentDate.Second + "]";
@@ -178,7 +180,6 @@ namespace ChatApp___Client
                                     LVI.Selected = true; 
 
                                     UpdateChat(SenderID, NewMessageLine);
-                                    // update tbInfo
                                 }
                             }
 
@@ -269,34 +270,33 @@ namespace ChatApp___Client
         {
             if (lvUsers.SelectedIndices.Count == 0)
             {
+                lblClientName.Text = "";
                 tbInfo.Clear();
                 return;
             }
  
-            int SelectedUserId = (int)lvUsers.SelectedItems[0].Tag;
-            tbInfo.Text = Chats[SelectedUserId].ToString();
+            int SelectedID = (int)lvUsers.SelectedItems[0].Tag;
+ 
+            lblClientName.Text = "Text to Client " + SelectedID + " (" + EncryptionMethod.ToString() +")";
+            tbInfo.Text = Chats[SelectedID].ToString();
         }
 
         private void UpdateChat(int FriendID, string Message)
         {
-            if (lvUsers.SelectedIndices.Count == 0) return;
+            if (lvUsers.SelectedIndices.Count == 0)
+                return;
+ 
             int SelectedID = (int)lvUsers.SelectedItems[0].Tag;
-
             Chats[FriendID].AppendLine(Message);
 
-            //MessageBox.Show("friendId:"+ friendId+ " SelectedID:" + SelectedID);
-
-            BeginInvoke(new Action(delegate 
+            if (FriendID == SelectedID)
             {
-                if (FriendID == SelectedID)
-                {
-                    tbInfo.Text += Message + Environment.NewLine;
-                }
-                else
-                {
-                    tbInfo.Text = Chats[FriendID].ToString();
-                }
-            }));
+                tbInfo.Text += Message + Environment.NewLine;
+            }
+            else
+            {
+                tbInfo.Text = Chats[FriendID].ToString();
+            }
         }
 
         private void btnSend1000x_Click(object sender, EventArgs e)
