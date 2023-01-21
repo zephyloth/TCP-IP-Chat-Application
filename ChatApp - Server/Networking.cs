@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,8 +10,8 @@ namespace ChatApp___Server
     public enum MessageHeader : int
     {
         Register,
-        Login,
         AddClient,
+        EncryptionMethod,
         Text
     }
 
@@ -74,7 +73,7 @@ namespace ChatApp___Server
         public int SenderID;
         public int ReceiverID;
         public MessageHeader MessageHeader;
- 
+
         public static int GetFixedSize()
         {
             return sizeof(int) * 3 + sizeof(MessageHeader);

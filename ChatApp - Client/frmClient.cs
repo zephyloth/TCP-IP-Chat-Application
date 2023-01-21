@@ -16,6 +16,8 @@ using System.Windows.Forms;
 using System.Linq;
 using Core.Crypto;
 using System.Collections;
+using System.Diagnostics;
+using System.Security.Cryptography;
 
 namespace ChatApp___Client
 {
@@ -40,8 +42,9 @@ namespace ChatApp___Client
 
         Dictionary<int, StringBuilder> Chats = new Dictionary<int, StringBuilder>();
 
-        string EncryptionPass = CryptBase.CreateMD5("jumbojetxx123");
-        CryptBase.EncryptionMethod EncryptionMethod;
+        const string EncryptionPass = "jumbojetxx123";
+        string EncryptionHash = CryptBase.CreateMD5(EncryptionPass);
+        CryptBase.EncryptionMethod EncryptionMethod = CryptBase.EncryptionMethod.BlowFish;
 
         bool TestMode { get; set; }
 
@@ -122,6 +125,9 @@ namespace ChatApp___Client
                 {
                     switch (MessageHeader)
                     {
+                        case MessageHeader.EncryptionMethod:
+                            EncryptionMethod = (CryptBase.EncryptionMethod)BitConverter.ToInt32(Data, 0);
+                            break;
                         case MessageHeader.Register:
                             ClientID = BitConverter.ToInt32(Data, 0);
                             Text = "Client " + ReceiverID;
@@ -150,14 +156,14 @@ namespace ChatApp___Client
                                     {
                                         case CryptBase.EncryptionMethod.BlowFish:
                                             string EncryptedText = Encoding.UTF8.GetString(BR.ReadBytes(DataSize - 8));
-                                            BlowFish BlowFish = new BlowFish(EncryptionPass, new HexCoding());
+                                            BlowFish BlowFish = new BlowFish(EncryptionHash, new HexCoding());
                                             DecryptedText = BlowFish.DecryptECB(EncryptedText, EncryptedText.Length);
                                             break;
                                         case CryptBase.EncryptionMethod.AES128:
                                         case CryptBase.EncryptionMethod.AES256:
                                             byte[] EncryptedData = BR.ReadBytes(DataSize - 8);
                                             int KeySize = EncryptionMethod == CryptBase.EncryptionMethod.AES256 ? 256 : 128;
-                                            DecryptedText = Encoding.UTF8.GetString(CryptBase.AESDecrypt(EncryptedData, EncryptionPass, KeySize));
+                                            DecryptedText = Encoding.UTF8.GetString(CryptBase.AESDecrypt(EncryptedData, EncryptionHash, KeySize));
                                             break;
                                         default:
                                             break;
@@ -169,7 +175,7 @@ namespace ChatApp___Client
                                     double ElapsedMS = Math.Round(Span.TotalMilliseconds % 256, 3);
                                     string TimeString = "[" + SentDate.Hour + ":" + SentDate.Minute + ":" + SentDate.Second + "]";
 
-                                    string NewMessageLine = TimeString + " Client " + SenderID + " : " + DecryptedText;
+                                    string NewMessageLine = TimeString +  " [" + EncryptionMethod.ToString() + "]" + " Client " + SenderID + " : " + DecryptedText;
 
                                     if (TestMode) 
                                         NewMessageLine += " (Took " + ElapsedMS +" MS to send.)";
@@ -203,21 +209,21 @@ namespace ChatApp___Client
 
             Date SentDate = new Date(DateTime.Now);
             string TimeString = "[" + SentDate.Hour + ":" + SentDate.Minute + ":" + SentDate.Second + "]";
-            string NewMessageLine = TimeString + " You : " + tbSend.Text;
+            string NewMessageLine = TimeString + " [" + EncryptionMethod.ToString() + "]" + " You : " + tbSend.Text;
             UpdateChat(ReceiverID, NewMessageLine);
 
             byte[] EncryptedData = null;
             switch (EncryptionMethod)
             {
                 case CryptBase.EncryptionMethod.BlowFish:
-                    BlowFish BlowFish = new BlowFish(EncryptionPass, new HexCoding());
+                    BlowFish BlowFish = new BlowFish(EncryptionHash, new HexCoding());
                     string EncryptedText = BlowFish.EncryptECB(tbSend.Text);
                     EncryptedData = Encoding.UTF8.GetBytes(EncryptedText);
                     break;
                 case CryptBase.EncryptionMethod.AES256:
                 case CryptBase.EncryptionMethod.AES128:
                     int KeySize = EncryptionMethod == CryptBase.EncryptionMethod.AES256 ? 256 : 128;
-                    EncryptedData = CryptBase.AESEncrypt(Encoding.UTF8.GetBytes(tbSend.Text), EncryptionPass, KeySize);     
+                    EncryptedData = CryptBase.AESEncrypt(Encoding.UTF8.GetBytes(tbSend.Text), EncryptionHash, KeySize);     
                     break;
                 default:
                     break;
@@ -252,12 +258,15 @@ namespace ChatApp___Client
 
         private void frmClient_Load(object sender, EventArgs e)
         {
+            CryptBase.AESSetPassword(EncryptionPass);
+
+            DoEncryptionTest();
             InitializeConnection();
         }
 
         private void frmClient_FormClosing(object sender, FormClosingEventArgs e)
         {
-            CloseConnection();
+           CloseConnection();
         }
 
         private void btnSend_Click(object sender, EventArgs e)
@@ -309,16 +318,69 @@ namespace ChatApp___Client
                     Send();
             }).Start();       
         }
-
-        private void btnApplyProperties_Click(object sender, EventArgs e)
-        {
-            EncryptionMethod = (CryptBase.EncryptionMethod)cbEncryption.SelectedIndex;
-            TabControl.SelectedTab = TabControl.TabPages["tpChat"];
-        }
-
+ 
         private void cbTestMode_CheckedChanged(object sender, EventArgs e)
         {
             TestMode = cbTestMode.Checked;
+        }
+ 
+        void AddResult(string Method, int KeySize, int TextSize, int Iteration)
+        {
+            var Stopwatch = new Stopwatch();
+            Stopwatch.Reset();
+            ListViewItem LVI = new ListViewItem(Method);//Method
+            LVI.SubItems.Add(KeySize.ToString());//Keysize
+            LVI.SubItems.Add(TextSize.ToString());//Textsize
+            LVI.SubItems.Add(Iteration.ToString());//iteration
+            Stopwatch.Start();
+
+            Random Rnd = new Random();
+            byte[] Bytes = new byte[TextSize];
+            Rnd.NextBytes(Bytes);
+            string String = Encoding.UTF8.GetString(Bytes);
+
+            BlowFish BlowFish = new BlowFish(EncryptionHash, new HexCoding());
+ 
+            for (int i = 0; i < Iteration; i++)
+            {
+                if (Method == "BlowFish")
+                {
+                    string Test = BlowFish.EncryptECB(String);
+                    Test = BlowFish.DecryptECB(Test, Test.Length);
+                }
+                else
+                {         
+                    CryptBase.AESDecrypt(CryptBase.AESEncrypt(Bytes, EncryptionHash, KeySize), EncryptionHash, KeySize);
+                }
+            }
+            Stopwatch.Stop();
+            LVI.SubItems.Add(Convert.ToString(Math.Round(Stopwatch.Elapsed.TotalMilliseconds, 3)));
+            lvResults.Items.Add(LVI);
+        }
+
+        void DoEncryptionTest()
+        {
+            lvResults.Items.Clear();
+
+            AddResult("BlowFish", 448, 16, 32);
+            AddResult("BlowFish", 448, 512, 32);
+            AddResult("BlowFish", 448, 16, 512);
+            AddResult("BlowFish", 448, 512, 512);
+
+            AddResult("AES (128)", 128, 16, 32);
+            AddResult("AES (128)", 128, 512, 32);
+            AddResult("AES (128)", 128, 16, 512);
+            AddResult("AES (128)", 128, 512, 512);
+
+            AddResult("AES (256)", 256, 16, 32);
+            AddResult("AES (256)", 256, 512, 32);
+            AddResult("AES (256)", 256, 16, 512);
+            AddResult("AES (256)", 256, 512, 512);
+        }
+
+        private void btnRefreshResults_Click(object sender, EventArgs e)
+        {
+            DoEncryptionTest();
         }
     }
 }

@@ -33,16 +33,31 @@ namespace ChatApp___Client
             string Encoded = BitConverter.ToString(Hash).Replace("-", string.Empty).ToLower();
             return Hash;
         }
+ 
+        //AES----------------
+        static byte[] PasswordBytes;
+        static byte[] SaltBytes;
+        static byte[] IV;
+        static byte[] Key128;
+        static byte[] Key256;
+
+        public static void AESSetPassword(string Password)
+        {
+            PasswordBytes = Encoding.UTF8.GetBytes(Password);
+            SaltBytes = CreateMD5(PasswordBytes);
+            IV = AESGenerateIV();
+
+            var Key = new Rfc2898DeriveBytes(PasswordBytes, SaltBytes, 100);
+            Key128 = Key.GetBytes(128 / 8);
+            Key256 = Key.GetBytes(256 / 8);
+        }
 
         private const int IV_LENGTH = 16;
 
         public static byte[] AESEncrypt(byte[] BytesToBeEncrypted, string Password, int KeySize)
         {
-            //byte[] RawBytes = Encoding.UTF8.GetBytes(Text);
-            byte[] PasswordBytes = Encoding.UTF8.GetBytes(Password);
             byte[] EncryptedBytes = null;
             byte[] EncryptedBytesAndIV = null;
-            byte[] SaltBytes = CreateMD5(PasswordBytes);
 
             using (MemoryStream MS = new MemoryStream())
             {
@@ -51,8 +66,8 @@ namespace ChatApp___Client
                     //AES.KeySize = 256;
                     AES.KeySize = KeySize;
 
-                    var Key = new Rfc2898DeriveBytes(PasswordBytes, SaltBytes, 100);
-                    AES.Key = Key.GetBytes(AES.KeySize / 8);
+                    if (KeySize == 128) AES.Key = Key128;
+                    if (KeySize == 256) AES.Key = Key256;
                     AES.IV = AESGenerateIV();
 
                     AES.Mode = CipherMode.CBC;
@@ -83,19 +98,16 @@ namespace ChatApp___Client
 
         public static byte[] AESDecrypt(byte[] BytesToBeDecrypted, string Password, int KeySize)
         {
-            byte[] PasswordBytes = Encoding.UTF8.GetBytes(Password);
             byte[] DecryptedBytes = null;
-            byte[] SaltBytes = CreateMD5(PasswordBytes);
 
             using (MemoryStream MS = new MemoryStream())
             {
                 using (AesCryptoServiceProvider AES = new AesCryptoServiceProvider())
                 {
-                    //AES.KeySize = 256;
                     AES.KeySize = KeySize;
 
-                    var key = new Rfc2898DeriveBytes(PasswordBytes, SaltBytes, 100);
-                    AES.Key = key.GetBytes(AES.KeySize / 8);
+                    if (KeySize == 128) AES.Key = Key128;
+                    if (KeySize == 256) AES.Key = Key256;
                     AES.IV = AESReadIV(BytesToBeDecrypted);
                     BytesToBeDecrypted = AESGetData(BytesToBeDecrypted);
                     AES.Mode = CipherMode.CBC;

@@ -30,48 +30,144 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmClient));
-            this.TabControl = new MaterialSkin.Controls.MaterialTabControl();
+            this.imgListIcons = new System.Windows.Forms.ImageList(this.components);
+            this.tpTesting = new System.Windows.Forms.TabPage();
+            this.btnRefreshResults = new MaterialSkin.Controls.MaterialButton();
+            this.lvResults = new MaterialSkin.Controls.MaterialListView();
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lblTestResults = new MaterialSkin.Controls.MaterialLabel();
             this.tpChat = new System.Windows.Forms.TabPage();
             this.lblClientName = new MaterialSkin.Controls.MaterialLabel();
-            this.cbTestMode = new MaterialSkin.Controls.MaterialCheckbox();
-            this.btnSend1000x = new MaterialSkin.Controls.MaterialButton();
             this.tbInfo = new MaterialSkin.Controls.MaterialMultiLineTextBox();
+            this.cbTestMode = new MaterialSkin.Controls.MaterialCheckbox();
             this.lblUsers = new MaterialSkin.Controls.MaterialLabel();
             this.lvUsers = new MaterialSkin.Controls.MaterialListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnSend = new MaterialSkin.Controls.MaterialButton();
             this.tbSend = new MaterialSkin.Controls.MaterialTextBox();
-            this.tpProperties = new System.Windows.Forms.TabPage();
-            this.btnApplyProperties = new MaterialSkin.Controls.MaterialButton();
-            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
-            this.cbEncryption = new System.Windows.Forms.ComboBox();
-            this.imgListIcons = new System.Windows.Forms.ImageList(this.components);
-            this.TabControl.SuspendLayout();
+            this.TabControl = new MaterialSkin.Controls.MaterialTabControl();
+            this.tpTesting.SuspendLayout();
             this.tpChat.SuspendLayout();
-            this.tpProperties.SuspendLayout();
+            this.TabControl.SuspendLayout();
             this.SuspendLayout();
             // 
-            // TabControl
+            // imgListIcons
             // 
-            this.TabControl.Controls.Add(this.tpChat);
-            this.TabControl.Controls.Add(this.tpProperties);
-            this.TabControl.Depth = 0;
-            this.TabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TabControl.ImageList = this.imgListIcons;
-            this.TabControl.Location = new System.Drawing.Point(3, 64);
-            this.TabControl.MouseState = MaterialSkin.MouseState.HOVER;
-            this.TabControl.Multiline = true;
-            this.TabControl.Name = "TabControl";
-            this.TabControl.SelectedIndex = 0;
-            this.TabControl.Size = new System.Drawing.Size(794, 433);
-            this.TabControl.TabIndex = 6;
+            this.imgListIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgListIcons.ImageStream")));
+            this.imgListIcons.TransparentColor = System.Drawing.Color.Transparent;
+            this.imgListIcons.Images.SetKeyName(0, "Chat32.png");
+            this.imgListIcons.Images.SetKeyName(1, "Perf32.png");
+            // 
+            // tpTesting
+            // 
+            this.tpTesting.Controls.Add(this.btnRefreshResults);
+            this.tpTesting.Controls.Add(this.lvResults);
+            this.tpTesting.Controls.Add(this.lblTestResults);
+            this.tpTesting.ImageKey = "Perf32.png";
+            this.tpTesting.Location = new System.Drawing.Point(4, 39);
+            this.tpTesting.Name = "tpTesting";
+            this.tpTesting.Size = new System.Drawing.Size(786, 390);
+            this.tpTesting.TabIndex = 2;
+            this.tpTesting.Text = "Testing";
+            this.tpTesting.UseVisualStyleBackColor = true;
+            // 
+            // btnRefreshResults
+            // 
+            this.btnRefreshResults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRefreshResults.AutoSize = false;
+            this.btnRefreshResults.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnRefreshResults.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnRefreshResults.Depth = 0;
+            this.btnRefreshResults.HighEmphasis = true;
+            this.btnRefreshResults.Icon = null;
+            this.btnRefreshResults.Location = new System.Drawing.Point(610, 346);
+            this.btnRefreshResults.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnRefreshResults.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnRefreshResults.Name = "btnRefreshResults";
+            this.btnRefreshResults.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnRefreshResults.Size = new System.Drawing.Size(164, 32);
+            this.btnRefreshResults.TabIndex = 22;
+            this.btnRefreshResults.Text = "Recompute Results";
+            this.btnRefreshResults.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnRefreshResults.UseAccentColor = false;
+            this.btnRefreshResults.UseVisualStyleBackColor = true;
+            this.btnRefreshResults.Click += new System.EventHandler(this.btnRefreshResults_Click);
+            // 
+            // lvResults
+            // 
+            this.lvResults.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvResults.AutoSizeTable = false;
+            this.lvResults.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.lvResults.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lvResults.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4,
+            this.columnHeader5,
+            this.columnHeader6});
+            this.lvResults.Depth = 0;
+            this.lvResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lvResults.FullRowSelect = true;
+            this.lvResults.HideSelection = false;
+            this.lvResults.Location = new System.Drawing.Point(16, 35);
+            this.lvResults.MinimumSize = new System.Drawing.Size(200, 100);
+            this.lvResults.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.lvResults.MouseState = MaterialSkin.MouseState.OUT;
+            this.lvResults.Name = "lvResults";
+            this.lvResults.OwnerDraw = true;
+            this.lvResults.Size = new System.Drawing.Size(758, 302);
+            this.lvResults.TabIndex = 21;
+            this.lvResults.UseCompatibleStateImageBehavior = false;
+            this.lvResults.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Method";
+            this.columnHeader2.Width = 120;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Key Size";
+            this.columnHeader3.Width = 120;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Text Size";
+            this.columnHeader4.Width = 131;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "Number of Iterations";
+            this.columnHeader5.Width = 186;
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Elapsed Time (Ms)";
+            this.columnHeader6.Width = 150;
+            // 
+            // lblTestResults
+            // 
+            this.lblTestResults.AutoSize = true;
+            this.lblTestResults.Depth = 0;
+            this.lblTestResults.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblTestResults.Location = new System.Drawing.Point(13, 13);
+            this.lblTestResults.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblTestResults.Name = "lblTestResults";
+            this.lblTestResults.Size = new System.Drawing.Size(325, 19);
+            this.lblTestResults.TabIndex = 20;
+            this.lblTestResults.Text = "Test Results (Only Encryption and Decryption)";
             // 
             // tpChat
             // 
             this.tpChat.Controls.Add(this.lblClientName);
-            this.tpChat.Controls.Add(this.cbTestMode);
-            this.tpChat.Controls.Add(this.btnSend1000x);
             this.tpChat.Controls.Add(this.tbInfo);
+            this.tpChat.Controls.Add(this.cbTestMode);
             this.tpChat.Controls.Add(this.lblUsers);
             this.tpChat.Controls.Add(this.lvUsers);
             this.tpChat.Controls.Add(this.btnSend);
@@ -96,46 +192,6 @@
             this.lblClientName.Size = new System.Drawing.Size(1, 0);
             this.lblClientName.TabIndex = 14;
             // 
-            // cbTestMode
-            // 
-            this.cbTestMode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbTestMode.AutoSize = true;
-            this.cbTestMode.Depth = 0;
-            this.cbTestMode.Location = new System.Drawing.Point(534, 3);
-            this.cbTestMode.Margin = new System.Windows.Forms.Padding(0);
-            this.cbTestMode.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.cbTestMode.MouseState = MaterialSkin.MouseState.HOVER;
-            this.cbTestMode.Name = "cbTestMode";
-            this.cbTestMode.ReadOnly = false;
-            this.cbTestMode.Ripple = true;
-            this.cbTestMode.Size = new System.Drawing.Size(110, 37);
-            this.cbTestMode.TabIndex = 13;
-            this.cbTestMode.Text = "Test Mode";
-            this.cbTestMode.UseVisualStyleBackColor = true;
-            this.cbTestMode.CheckedChanged += new System.EventHandler(this.cbTestMode_CheckedChanged);
-            // 
-            // btnSend1000x
-            // 
-            this.btnSend1000x.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSend1000x.AutoSize = false;
-            this.btnSend1000x.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnSend1000x.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnSend1000x.Depth = 0;
-            this.btnSend1000x.HighEmphasis = true;
-            this.btnSend1000x.Icon = null;
-            this.btnSend1000x.Location = new System.Drawing.Point(663, 9);
-            this.btnSend1000x.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnSend1000x.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnSend1000x.Name = "btnSend1000x";
-            this.btnSend1000x.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnSend1000x.Size = new System.Drawing.Size(116, 22);
-            this.btnSend1000x.TabIndex = 11;
-            this.btnSend1000x.Text = "Send 1000x";
-            this.btnSend1000x.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnSend1000x.UseAccentColor = false;
-            this.btnSend1000x.UseVisualStyleBackColor = true;
-            this.btnSend1000x.Click += new System.EventHandler(this.btnSend1000x_Click);
-            // 
             // tbInfo
             // 
             this.tbInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -153,6 +209,24 @@
             this.tbInfo.Size = new System.Drawing.Size(567, 285);
             this.tbInfo.TabIndex = 10;
             this.tbInfo.Text = "";
+            // 
+            // cbTestMode
+            // 
+            this.cbTestMode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbTestMode.AutoSize = true;
+            this.cbTestMode.Depth = 0;
+            this.cbTestMode.Location = new System.Drawing.Point(669, 3);
+            this.cbTestMode.Margin = new System.Windows.Forms.Padding(0);
+            this.cbTestMode.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.cbTestMode.MouseState = MaterialSkin.MouseState.HOVER;
+            this.cbTestMode.Name = "cbTestMode";
+            this.cbTestMode.ReadOnly = false;
+            this.cbTestMode.Ripple = true;
+            this.cbTestMode.Size = new System.Drawing.Size(110, 37);
+            this.cbTestMode.TabIndex = 13;
+            this.cbTestMode.Text = "Test Mode";
+            this.cbTestMode.UseVisualStyleBackColor = true;
+            this.cbTestMode.CheckedChanged += new System.EventHandler(this.cbTestMode_CheckedChanged);
             // 
             // lblUsers
             // 
@@ -237,71 +311,20 @@
             this.tbSend.Text = "";
             this.tbSend.TrailingIcon = null;
             // 
-            // tpProperties
+            // TabControl
             // 
-            this.tpProperties.Controls.Add(this.btnApplyProperties);
-            this.tpProperties.Controls.Add(this.materialLabel1);
-            this.tpProperties.Controls.Add(this.cbEncryption);
-            this.tpProperties.ImageKey = "Settings32.png";
-            this.tpProperties.Location = new System.Drawing.Point(4, 39);
-            this.tpProperties.Name = "tpProperties";
-            this.tpProperties.Padding = new System.Windows.Forms.Padding(3);
-            this.tpProperties.Size = new System.Drawing.Size(536, 290);
-            this.tpProperties.TabIndex = 1;
-            this.tpProperties.Text = "Properties";
-            this.tpProperties.UseVisualStyleBackColor = true;
-            // 
-            // btnApplyProperties
-            // 
-            this.btnApplyProperties.AutoSize = false;
-            this.btnApplyProperties.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnApplyProperties.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnApplyProperties.Depth = 0;
-            this.btnApplyProperties.HighEmphasis = true;
-            this.btnApplyProperties.Icon = null;
-            this.btnApplyProperties.Location = new System.Drawing.Point(19, 59);
-            this.btnApplyProperties.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnApplyProperties.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnApplyProperties.Name = "btnApplyProperties";
-            this.btnApplyProperties.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnApplyProperties.Size = new System.Drawing.Size(75, 50);
-            this.btnApplyProperties.TabIndex = 18;
-            this.btnApplyProperties.Text = "Apply";
-            this.btnApplyProperties.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnApplyProperties.UseAccentColor = false;
-            this.btnApplyProperties.UseVisualStyleBackColor = true;
-            this.btnApplyProperties.Click += new System.EventHandler(this.btnApplyProperties_Click);
-            // 
-            // materialLabel1
-            // 
-            this.materialLabel1.AutoSize = true;
-            this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel1.Location = new System.Drawing.Point(19, 24);
-            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(138, 19);
-            this.materialLabel1.TabIndex = 16;
-            this.materialLabel1.Text = "Encryption Method:";
-            // 
-            // cbEncryption
-            // 
-            this.cbEncryption.FormattingEnabled = true;
-            this.cbEncryption.Items.AddRange(new object[] {
-            "BlowFish (Default)",
-            "AES (128)",
-            "AES (256)"});
-            this.cbEncryption.Location = new System.Drawing.Point(163, 22);
-            this.cbEncryption.Name = "cbEncryption";
-            this.cbEncryption.Size = new System.Drawing.Size(121, 21);
-            this.cbEncryption.TabIndex = 14;
-            // 
-            // imgListIcons
-            // 
-            this.imgListIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgListIcons.ImageStream")));
-            this.imgListIcons.TransparentColor = System.Drawing.Color.Transparent;
-            this.imgListIcons.Images.SetKeyName(0, "Chat32.png");
-            this.imgListIcons.Images.SetKeyName(1, "Settings32.png");
+            this.TabControl.Controls.Add(this.tpChat);
+            this.TabControl.Controls.Add(this.tpTesting);
+            this.TabControl.Depth = 0;
+            this.TabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TabControl.ImageList = this.imgListIcons;
+            this.TabControl.Location = new System.Drawing.Point(3, 64);
+            this.TabControl.MouseState = MaterialSkin.MouseState.HOVER;
+            this.TabControl.Multiline = true;
+            this.TabControl.Name = "TabControl";
+            this.TabControl.SelectedIndex = 0;
+            this.TabControl.Size = new System.Drawing.Size(794, 433);
+            this.TabControl.TabIndex = 6;
             // 
             // frmClient
             // 
@@ -316,32 +339,36 @@
             this.Text = "Client";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmClient_FormClosing);
             this.Load += new System.EventHandler(this.frmClient_Load);
-            this.TabControl.ResumeLayout(false);
+            this.tpTesting.ResumeLayout(false);
+            this.tpTesting.PerformLayout();
             this.tpChat.ResumeLayout(false);
             this.tpChat.PerformLayout();
-            this.tpProperties.ResumeLayout(false);
-            this.tpProperties.PerformLayout();
+            this.TabControl.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private MaterialSkin.Controls.MaterialTabControl TabControl;
+        private System.Windows.Forms.ImageList imgListIcons;
+        private System.Windows.Forms.TabPage tpTesting;
+        private MaterialSkin.Controls.MaterialButton btnRefreshResults;
+        private MaterialSkin.Controls.MaterialListView lvResults;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
+        private MaterialSkin.Controls.MaterialLabel lblTestResults;
         private System.Windows.Forms.TabPage tpChat;
-        private System.Windows.Forms.TabPage tpProperties;
-        private MaterialSkin.Controls.MaterialTextBox tbSend;
-        private MaterialSkin.Controls.MaterialButton btnSend;
+        private MaterialSkin.Controls.MaterialLabel lblClientName;
+        private MaterialSkin.Controls.MaterialMultiLineTextBox tbInfo;
+        private MaterialSkin.Controls.MaterialCheckbox cbTestMode;
+        private MaterialSkin.Controls.MaterialLabel lblUsers;
         private MaterialSkin.Controls.MaterialListView lvUsers;
         private System.Windows.Forms.ColumnHeader columnHeader1;
-        private MaterialSkin.Controls.MaterialLabel lblUsers;
-        private MaterialSkin.Controls.MaterialMultiLineTextBox tbInfo;
-        private System.Windows.Forms.ImageList imgListIcons;
-        private MaterialSkin.Controls.MaterialButton btnSend1000x;
-        private MaterialSkin.Controls.MaterialLabel materialLabel1;
-        private System.Windows.Forms.ComboBox cbEncryption;
-        private MaterialSkin.Controls.MaterialButton btnApplyProperties;
-        private MaterialSkin.Controls.MaterialCheckbox cbTestMode;
-        private MaterialSkin.Controls.MaterialLabel lblClientName;
+        private MaterialSkin.Controls.MaterialButton btnSend;
+        private MaterialSkin.Controls.MaterialTextBox tbSend;
+        private MaterialSkin.Controls.MaterialTabControl TabControl;
     }
 }
 

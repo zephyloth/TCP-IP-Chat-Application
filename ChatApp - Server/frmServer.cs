@@ -24,9 +24,10 @@ namespace ChatApp___Server
         TcpListener ServerSocket;
         ConcurrentDictionary<int, TcpClient> Clients = new ConcurrentDictionary<int, TcpClient>();
         int ClientCount = 0;
- 
         long IsClosing = 0;
- 
+
+        CryptBase.EncryptionMethod EncryptionMethod;
+
         public frmServer()
         {
             CheckForIllegalCrossThreadCalls = false;
@@ -185,6 +186,9 @@ namespace ChatApp___Server
                 case MessageHeader.Text:
                     DataSize = ((byte[])Data).Length;
                     break;
+                case MessageHeader.EncryptionMethod:
+                    DataSize = sizeof(int);
+                    break;
                 default:
                     break;
             }
@@ -207,6 +211,9 @@ namespace ChatApp___Server
                         case MessageHeader.Text:
                             BW.Write( (byte[])Data);
                             break;
+                        case MessageHeader.EncryptionMethod:
+                            BW.Write((int)Data);
+                            break;
                         default:
                             break;
                     }
@@ -224,6 +231,14 @@ namespace ChatApp___Server
         private void frmServer_FormClosing(object sender, FormClosingEventArgs e)
         {
             ServerSocket.Stop();
+        }
+
+        private void cbEncryption_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            EncryptionMethod = (CryptBase.EncryptionMethod)cbEncryption.SelectedIndex;
+
+            foreach (var Client in Clients)
+                SendToClient(0, Client.Key, MessageHeader.EncryptionMethod, (int)EncryptionMethod);
         }
     }
 }
